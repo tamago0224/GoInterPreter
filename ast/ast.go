@@ -1,7 +1,7 @@
 package ast
 
 import (
-	"byte"
+	"bytes"
 	"github.com/tamago0224/monkey/token"
 )
 
@@ -55,7 +55,7 @@ func (ls *LetStatement) String() string {
 	var out bytes.Buffer
 
 	out.WriteString(ls.TokenLiteral() + " ")
-	out.WriteString(ls.name.String())
+	out.WriteString(ls.Name.String())
 	out.WriteString(" = ")
 
 	if ls.Value != nil {
@@ -88,7 +88,7 @@ func (rs *ReturnStatement) String() string {
 	out.WriteString(rs.TokenLiteral() + " ")
 
 	if rs.ReturnValue != nil {
-		out.WriteString(rs.ReturnValu.String())
+		out.WriteString(rs.ReturnValue.String())
 	}
 
 	return out.String()
@@ -105,7 +105,7 @@ func (es *ExpressionStatement) TokenLiteral() string { return es.Token.Literal }
 
 func (es *ExpressionStatement) String() string {
 	if es.Expression != nil {
-		return ex.Expression.String()
+		return es.Expression.String()
 	}
 
 	return ""
