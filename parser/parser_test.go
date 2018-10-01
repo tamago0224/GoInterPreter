@@ -1,8 +1,8 @@
 package paser
 
 import (
-	"monkey/ast"
-	"monkey/lexer"
+	"github.com/tamago0224/monkey/ast"
+	"github.com/tamago0224/monkey/lexer"
 	"testing"
 )
 
@@ -106,5 +106,36 @@ func TestReturnStatement(t *testing.T) {
 			t.Errorf("returnStmt.TokenLiteral not 'return', got=%q",
 				returnStmt.TokenLiteral())
 		}
+	}
+}
+
+func TestIdentifierExpression(t *testing.T) {
+	input := "foobar;"
+
+	l := lexer.New(input)
+	p := New(l)
+	program := p.ParseProgram()
+	checkParserErrors(t, p)
+
+	if len(program.Statements) != 1 {
+		t.Fatalf("program has not enough statements. got=%d",
+			len(program.Statements))
+	}
+	stmt, ok := program.Statements[0].(*ast.ExpressionStatement)
+	if !ok {
+		t.Fatalf("program.Statements[0] is not ast.ExpressionStatement. got=%T",
+			program.Statments[0])
+	}
+
+	ident, ok := stmt.(*ast.Identifier)
+	if !ok {
+		t.Fatalf("program.Statements[0] is not ast.ExpressionStatement. got=%T",
+			program.Statements[0])
+	}
+	if ident.Value != "foobar" {
+		t.Errorf("ident.Value not %s. got=%s", "foobar", ident.Value)
+	}
+	if ident.TokenLiteral() != "foobar" {
+		t.Errorf("ident.TokenLiteral not %s. got=%s", "foobar", ident.TokenLiteral())
 	}
 }
