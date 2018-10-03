@@ -5,6 +5,7 @@ import (
 	"github.com/tamago0224/monkey/ast"
 	"github.com/tamago0224/monkey/lexer"
 	"github.com/tamago0224/monkey/token"
+	"strconv"
 )
 
 // 優先順位
@@ -41,8 +42,10 @@ func New(l *lexer.Lexer) *Parser {
 		errors: []string{},
 	}
 
+	// トークンに構文解析関数を紐付ける
 	p.prefixParseFns = make(map[token.TokenType]prefixParseFn)
 	p.registerPrefix(token.IDENT, p.parseIdentifier)
+	p.registerPrefix(token.INT, p.parseIntegerLiteral)
 
 	// 2つトークンを読み込み、curTokenとpeekTokenにセットされる
 	p.nextToken()
@@ -51,8 +54,23 @@ func New(l *lexer.Lexer) *Parser {
 	return p
 }
 
+// token.IDENTを担当する構文解析関数
 func (p *Parser) parseIdentifier() ast.Expression {
 	return &ast.Identifier{Token: p.curToken, Value: p.curToken.Literal}
+}
+
+// token.INTを担当する構文解析関数
+func (p *Parser) parseIntegerLiteral() ast.Expression {
+	lit := &ast.IntegerLiteral{Token: p.curToken}
+
+	value, err := strconv.ParseInt(p.curToken.Literal, 0, 64)
+	if err != nil {
+		msg := fmt.Sprintf("could not parse %q as integer", p.curToken.Literal)
+		p.errors = append(p.errors, msg)
+		return nil
+	}
+	lit.Value = value
+	return lit
 }
 
 func (p *Parser) Errors() []string {
