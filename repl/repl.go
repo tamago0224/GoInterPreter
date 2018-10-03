@@ -3,9 +3,9 @@ package repl
 import (
 	"bufio"
 	"fmt"
+	"github.com/tamago0224/monkey/lexer"
+	"github.com/tamago0224/monkey/token"
 	"io"
-	"monkey/lexer"
-	"monkey/token"
 )
 
 const (
