@@ -5,12 +5,11 @@ import (
 	"fmt"
 	"github.com/tamago0224/monkey/lexer"
 	"github.com/tamago0224/monkey/parser"
-	//"github.com/tamago0224/monkey/token"
 	"io"
 )
 
 const (
-	PROMPT = ">> "
+	PROMPT = "tgsh1.0 $"
 )
 
 func Start(in io.Reader, out io.Writer) {
