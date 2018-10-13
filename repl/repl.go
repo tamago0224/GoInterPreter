@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"github.com/tamago0224/monkey/evaluator"
 	"github.com/tamago0224/monkey/lexer"
-	parser "github.com/tamago0224/monkey/parser"
+	"github.com/tamago0224/monkey/parser"
 	"io"
 )
 
