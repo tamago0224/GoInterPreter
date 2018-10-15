@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"github.com/tamago0224/monkey/evaluator"
 	"github.com/tamago0224/monkey/lexer"
+	"github.com/tamago0224/monkey/object"
 	"github.com/tamago0224/monkey/parser"
 	"io"
 )
@@ -15,6 +16,7 @@ const (
 
 func Start(in io.Reader, out io.Writer) {
 	scanner := bufio.NewScanner(in)
+	env := object.NewEnvironment()
 
 	for {
 		fmt.Printf(PROMPT)
