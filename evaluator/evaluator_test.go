@@ -1,7 +1,6 @@
 package evaluator
 
 import (
-	"fmt"
 	"github.com/tamago0224/monkey/lexer"
 	"github.com/tamago0224/monkey/object"
 	"github.com/tamago0224/monkey/parser"
@@ -177,7 +176,6 @@ func TestErrorHandling(t *testing.T) {
 		evaluated := testEval(tt.input)
 
 		errObj, ok := evaluated.(*object.Error)
-		fmt.Printf("TestCase: %s\n", tt.input)
 		if !ok {
 			t.Errorf("no error object returned. got=%T(%+v)",
 				evaluated, evaluated)
